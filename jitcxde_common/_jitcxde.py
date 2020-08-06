@@ -3,7 +3,7 @@
 
 from tempfile import mkdtemp
 from os import path
-from inspect import stack, isgeneratorfunction, isfunction
+from inspect import stack, isgenerator, isfunction
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import shutil
@@ -44,6 +44,9 @@ MSVC_COMPILE_ARGS = [
 
 #: A list with the default linker arguments for the Microsoft compiler.
 MSVC_LINK_ARGS = [ "/ignore:4197" ]
+
+def isgeneratorfunction(object):
+	return isgenerator(object) and hasattr(object,'__call__')
 
 class jitcxde(CheckEnvironment):
 	"""
